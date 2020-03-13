@@ -1,0 +1,27 @@
+import React from "react";
+import logo from "./logo.svg";
+import "./App.css";
+
+class App extends React.Component {
+  componentDidMount() {
+    fetch("http://localhost:3000/banana")
+      .then(function(response) {
+        return response.json();
+      })
+      .then(json => {
+        this.setState(json);
+      })
+      .catch(console.log);
+  }
+  render() {
+    return (
+      <div className="App">
+        <header className="App-header">
+          <p>Code Notebook</p>
+        </header>
+      </div>
+    );
+  }
+}
+
+export default App;
