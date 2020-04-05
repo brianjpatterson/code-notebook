@@ -8,8 +8,8 @@ class App extends React.Component {
     super(props);
 
     this.state = {
-      title: "",
-      content: "",
+      title: "Test Title",
+      content: "Test Content",
       snippets: []
     };
   }

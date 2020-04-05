@@ -6,16 +6,17 @@ class Snippet extends React.Component {
     super(props);
   }
 
-  handleClick = event => {
-    let snippetId = event.currentTarget.querySelector(".card-subtitle")
-      .innerText;
-    this.setState({ viewSnippetId: snippetId });
+  handleClick = (event) => {
+    this.props.onClickSnippet(event.currentTarget.id);
   };
 
   render() {
+    // console.log(
+    //  "snippet comp render -> this.props.snippet.id: " + this.props.snippet.id
+    //   );
     return (
-      <Card id={this.props.snippet.id}>
-        <CardBody onClick={this.handleClick}>
+      <Card onClick={this.handleClick} id={this.props.snippet.id}>
+        <CardBody>
           <CardTitle>Static Title</CardTitle>
           <CardSubtitle>{this.props.snippet.id}</CardSubtitle>
           <CardText>Static Content</CardText>
