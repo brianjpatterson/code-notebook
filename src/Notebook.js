@@ -1,5 +1,5 @@
 import React from "react";
-import { Row, Col } from "reactstrap";
+import { Row, Col, Button } from "reactstrap";
 import Snippet from "./Snippet";
 
 class Notebook extends React.Component {
@@ -7,6 +7,7 @@ class Notebook extends React.Component {
     super(props);
     this.state = { viewSnippetId: null, snipId: null };
     this.updateViewSnippet = this.updateViewSnippet.bind(this);
+    this.viewAllClick = this.viewAllClick.bind(this);
     //    this.onClick = this.onClick.bind(this);
   }
 
@@ -19,29 +20,31 @@ class Notebook extends React.Component {
       }
       return -1;
     }
-    console.log("view snippet -> snippetId: " + snippetId);
     this.setState({ viewSnippetId: snippetId });
     var snip = findWithAttr(this.props.snippets, "id", snippetId);
-    console.log(snip);
     this.setState({ snipId: snip });
   }
 
+  viewAllClick() {
+    this.setState({ viewSnippetId: null });
+  }
+
   render() {
-    //  console.log("snipid: " + this.state.snipId);
-    // console.log("notebook comp render -> this.props.snippets: ");
-    // console.log(this.props.snippets);
-    // console.log(
-    //   "notbook comp render -> this.props.snippets[this.state.viewSnippetId]: "
-    //  );
-    //  console.log(this.props.snippets[this.state.viewSnippetId]);
-    //  console.log(
-    ///   "notebook comp render -> this.state.viewSnippetId: " +
-    //   this.state.viewSnippetId
-    // );
     return (
       <Row>
         <Col>
           <div className="Main">
+            <div className="main-menu">
+              {this.state.viewSnippetId ? (
+                <Button variant="primary" onClick={this.viewAllClick}>
+                  View All
+                </Button>
+              ) : (
+                <Button variant="primary" disabled>
+                  View All
+                </Button>
+              )}
+            </div>
             <div className="viewList">
               {this.state.viewSnippetId ? (
                 <Snippet snippet={this.props.snippets[this.state.snipId]} />
