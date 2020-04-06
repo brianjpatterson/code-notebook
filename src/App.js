@@ -1,57 +1,62 @@
 import React from "react";
-import uuid from "uuid";
-import Notebook from "./Notebook";
-import { Container } from "reactstrap";
+import Mainmenu from "./Mainmenu.js";
+import Notebook from "./Notebook.js";
+import { Container, Row, Col } from "reactstrap";
 
 class App extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      title: "Test Title",
-      content: "Test Content",
-      snippets: []
+      viewSnippetId: null,
+      title: "",
+      content: "",
+      snippets: [],
     };
+
+    this.addSnippet = this.addSnippet.bind(this);
+    this.inputChange = this.inputChange.bind(this);
+    this.updateView = this.updateView.bind(this);
   }
 
-  handleChange = event => {
-    this.setState({ [event.target.getAttribute("id")]: event.target.value });
-  };
+  updateView(sid) {
+    this.setState({ viewSnippetId: sid });
+  }
 
-  handleSubmit = event => {
-    let newSnippet = {
-      id: uuid.v4(),
-      title: this.state.title,
-      content: this.state.content
-    };
+  inputChange(inputId, inputValue) {
+    this.setState({ [inputId]: inputValue });
+  }
 
-    this.setState(previousState => {
-      return { snippets: [...previousState.snippets, newSnippet] };
+  addSnippet(newSnippet) {
+    this.setState((previousState) => {
+      return {
+        snippets: [...previousState.snippets, newSnippet],
+      };
     });
-
-    event.preventDefault();
-  };
+  }
 
   render() {
     return (
       <div className="App">
         <Container>
-          <Notebook snippets={this.state.snippets} />
-          <form onSubmit={this.handleSubmit}>
-            <input
-              type="text"
-              id="title"
-              value={this.state.title}
-              onChange={this.handleChange}
-            />
-            <input
-              type="text"
-              id="content"
-              value={this.state.content}
-              onChange={this.handleChange}
-            />
-            <input type="submit" />
-          </form>
+          <Row>
+            <Col xs="3">
+              <Mainmenu
+                thisTitle={this.state.title}
+                thisContent={this.state.content}
+                onInputChange={this.inputChange}
+                onAddSnippet={this.addSnippet}
+                updateViewSnippetId={this.updateView}
+              />
+            </Col>
+            <Col xs="9">
+              <Notebook
+                vsnipid={this.state.viewSnippetId}
+                updateViewSnippetId={this.updateView}
+                snippets={this.state.snippets}
+              />
+            </Col>
+          </Row>
         </Container>
       </div>
     );

@@ -5,52 +5,70 @@ import Snippet from "./Snippet";
 class Notebook extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { viewSnippetId: null, snipId: null };
+    this.state = { snipId: null };
     this.updateViewSnippet = this.updateViewSnippet.bind(this);
     this.viewAllClick = this.viewAllClick.bind(this);
+    this.removeSnippet = this.removeSnippet.bind(this);
+    this.updateSnippet = this.updateSnippet.bind(this);
     //    this.onClick = this.onClick.bind(this);
   }
-
-  updateViewSnippet(snippetId) {
-    function findWithAttr(array, attr, value) {
-      for (var i = 0; i < array.length; i += 1) {
-        if (array[i][attr] === value) {
-          return i;
-        }
+  findWithAttr(array, attr, value) {
+    for (var i = 0; i < array.length; i += 1) {
+      if (array[i][attr] === value) {
+        return i;
       }
-      return -1;
     }
-    this.setState({ viewSnippetId: snippetId });
-    var snip = findWithAttr(this.props.snippets, "id", snippetId);
+    return -1;
+  }
+  updateViewSnippet(snippetId) {
+    this.props.updateViewSnippetId(snippetId);
+    var snip = this.findWithAttr(this.props.snippets, "id", snippetId);
     this.setState({ snipId: snip });
   }
 
   viewAllClick() {
-    this.setState({ viewSnippetId: null });
+    this.props.updateViewSnippetId(null);
   }
 
+  updateSnippet(sid) {
+    var snippetIndex = this.findWithAttr(this.props.snippets, "id", sid);
+    console.dir(this.props.snippets[snippetIndex]);
+  }
+
+  removeSnippet(sid) {
+    var snippetIndex = this.findWithAttr(this.props.snippets, "id", sid);
+    this.props.snippets.splice(snippetIndex, 1);
+    this.viewAllClick();
+  }
   render() {
     return (
       <Row>
         <Col>
           <div className="Main">
             <div className="main-menu">
-              {this.state.viewSnippetId ? (
-                <Button variant="primary" onClick={this.viewAllClick}>
+              {this.props.vsnipid ? (
+                <Button color="success" onClick={this.viewAllClick}>
                   View All
                 </Button>
               ) : (
-                <Button variant="primary" disabled>
+                <Button color="secondary" disabled={true}>
                   View All
                 </Button>
               )}
             </div>
             <div className="viewList">
-              {this.state.viewSnippetId ? (
-                <Snippet snippet={this.props.snippets[this.state.snipId]} />
+              {this.props.vsnipid ? (
+                <Snippet
+                  onDeleteSnippet={this.removeSnippet}
+                  onEditSnippet={this.updateSnippet}
+                  onClickSnippet={this.updateViewSnippet}
+                  snippet={this.props.snippets[this.state.snipId]}
+                />
               ) : (
                 this.props.snippets.map((snippet) => (
                   <Snippet
+                    onDeleteSnippet={this.removeSnippet}
+                    onEditSnippet={this.updateSnippet}
                     onClickSnippet={this.updateViewSnippet}
                     key={snippet.id}
                     snippet={snippet}
