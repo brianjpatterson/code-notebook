@@ -63,6 +63,8 @@ class App extends React.Component {
       this.setState({
         activeSnippetUUID: null,
         activeSnippetIndex: null,
+        title: "",
+        content: "",
         currentAction: "viewAll",
       });
     }
@@ -85,6 +87,18 @@ class App extends React.Component {
     });
   };
 
+  snippetAction = (action, snippetUUID) => {
+    if (action === "view") this.setActiveSnippet(snippetUUID);
+    if (action === "edit") this.editSnippet(snippetUUID);
+    if (action === "delete") this.deleteSnippet(snippetUUID);
+  };
+
+  deleteSnippet = (snippetUUID) => {
+    this.setActiveSnippet(snippetUUID);
+    this.state.snippets.splice(this.state.activeSnippetIndex, 1);
+    this.setActiveSnippet(null);
+  };
+
   editSnippet = (snippetUUID) => {
     this.setActiveSnippet(snippetUUID);
     let index = this.getSnippetIndexFromUUID(snippetUUID);
@@ -93,12 +107,14 @@ class App extends React.Component {
     this.setState({ currentAction: "edit", title: title, content: content });
   };
 
-  addSnippet = (newSnippet) =>
+  addSnippet = (newSnippet) => {
     this.setState((previousState) => {
       return {
         snippets: [...previousState.snippets, newSnippet],
       };
     });
+    this.setActiveSnippet(null);
+  };
 
   render() {
     return (
@@ -107,21 +123,15 @@ class App extends React.Component {
           <Row>
             <Col xs="3">
               <Notebook
-                onUpdateActiveSnippet={this.updateActiveSnippet}
-                onSetActiveSnippet={this.setActiveSnippet}
-                onClearInputs={this.inputClear}
-                onEditSnippet={this.editSnippet}
+                onSnippetAction={this.snippetAction}
                 activeSnippetIndex={this.state.activeSnippetIndex}
                 activeSnippetUUID={this.state.activeSnippetUUID}
-                currentAction={this.currentAction}
                 snippets={this.state.snippets}
               />
             </Col>
             <Col xs="9">
               <Mainmenu
                 onViewSnippet={this.setActiveSnippet}
-                onViewAllSnippets={this.setActiveSnippet}
-                onClearInputs={this.inputClear}
                 onInputChange={this.inputChange}
                 onAddSnippet={this.addSnippet}
                 onSaveSnippet={this.updateActiveSnippet}

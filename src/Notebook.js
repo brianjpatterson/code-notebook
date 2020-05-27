@@ -3,21 +3,9 @@ import { Row, Col, Button } from "reactstrap";
 import Snippet from "./Snippet";
 
 class Notebook extends React.Component {
-  viewAllSnippets = () => {
-    this.props.onSetActiveSnippet(null);
-    this.props.onClearInputs();
-  };
+  snippetAction = (action, snippetUUID) =>
+    this.props.onSnippetAction(action, snippetUUID);
 
-  viewSnippet = (snippetUUID) => this.props.onSetActiveSnippet(snippetUUID);
-
-  editSnippet = (snippetUUID) => this.props.onEditSnippet(snippetUUID);
-
-  removeSnippet = (snippetUUID) => {
-    this.props.onSetActiveSnippet(snippetUUID);
-    let index = this.props.activeSnippetIndex;
-    this.props.snippets.splice(index, 1);
-    this.viewAllSnippets();
-  };
   render() {
     return (
       <Row>
@@ -25,7 +13,10 @@ class Notebook extends React.Component {
           <div className="Main">
             <div className="main-menu">
               {this.props.activeSnippetUUID ? (
-                <Button color="success" onClick={this.viewAllSnippets}>
+                <Button
+                  color="success"
+                  onClick={(e) => this.props.onSnippetAction("view", null)}
+                >
                   &lt;&nbsp;BACK
                 </Button>
               ) : (
@@ -35,17 +26,13 @@ class Notebook extends React.Component {
             <div className="viewList">
               {this.props.activeSnippetIndex ? (
                 <Snippet
-                  onDeleteSnippet={this.removeSnippet}
-                  onEditSnippet={this.editSnippet}
-                  onClickSnippet={this.viewSnippet}
+                  onSnippetAction={this.snippetAction}
                   snippet={this.props.snippets[this.props.activeSnippetIndex]}
                 />
               ) : (
                 this.props.snippets.map((snippet) => (
                   <Snippet
-                    onDeleteSnippet={this.removeSnippet}
-                    onEditSnippet={this.editSnippet}
-                    onClickSnippet={this.viewSnippet}
+                    onSnippetAction={this.snippetAction}
                     key={snippet.id}
                     snippet={snippet}
                   />

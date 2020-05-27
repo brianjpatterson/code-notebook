@@ -20,12 +20,8 @@ class Mainmenu extends React.Component {
       content: this.props.content,
     };
 
-    this.props.onViewAllSnippets();
     this.props.onAddSnippet(newSnippet);
-    this.clearInputs();
   };
-
-  clearInputs = () => this.props.onClearInputs();
 
   handleChange = (e) =>
     this.props.onInputChange(e.currentTarget.id, e.currentTarget.value);

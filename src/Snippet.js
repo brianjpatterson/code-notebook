@@ -2,28 +2,22 @@ import React from "react";
 import { Card, CardBody, CardTitle, Button, ButtonGroup } from "reactstrap";
 
 class Snippet extends React.Component {
-  deleteSnippet = (event) => {
-    this.props.onDeleteSnippet(event.currentTarget.id);
-  };
-
-  editSnippet = (event) => {
-    this.props.onEditSnippet(event.currentTarget.id);
-  };
-
-  handleClick = (event) => {
-    this.props.onClickSnippet(event.currentTarget.id);
-  };
+  snippetAction = (action, snippetUUID) =>
+    this.props.onSnippetAction(action, snippetUUID);
 
   render() {
     return (
       <Card>
-        <CardBody onClick={this.handleClick} id={this.props.snippet.id}>
+        <CardBody
+          onClick={(e) => this.snippetAction("view", e.currentTarget.id)}
+          id={this.props.snippet.id}
+        >
           <CardTitle>{this.props.snippet.title}</CardTitle>
         </CardBody>
         <ButtonGroup>
           <Button
             id={this.props.snippet.id}
-            onClick={this.editSnippet}
+            onClick={(e) => this.snippetAction("edit", e.currentTarget.id)}
             color="primary"
             size="xs"
           >
@@ -32,7 +26,7 @@ class Snippet extends React.Component {
 
           <Button
             id={this.props.snippet.id}
-            onClick={this.deleteSnippet}
+            onClick={(e) => this.snippetAction("delete", e.currentTarget.id)}
             color="danger"
             size="xs"
           >
