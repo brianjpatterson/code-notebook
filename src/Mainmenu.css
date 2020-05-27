@@ -1,0 +1,9 @@
+.titleInput,
+.contentInput {
+  display: block;
+  width: 80%;
+}
+pre {
+  width: 100%;
+  text-align: left;
+}

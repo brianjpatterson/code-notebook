@@ -1,19 +1,7 @@
 import React from "react";
-import {
-  Card,
-  CardText,
-  CardBody,
-  CardTitle,
-  CardSubtitle,
-  Button,
-  ButtonGroup,
-} from "reactstrap";
+import { Card, CardBody, CardTitle, Button, ButtonGroup } from "reactstrap";
 
 class Snippet extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-
   deleteSnippet = (event) => {
     this.props.onDeleteSnippet(event.currentTarget.id);
   };
@@ -31,15 +19,13 @@ class Snippet extends React.Component {
       <Card>
         <CardBody onClick={this.handleClick} id={this.props.snippet.id}>
           <CardTitle>{this.props.snippet.title}</CardTitle>
-          <CardSubtitle>{this.props.snippet.id}</CardSubtitle>
-          <CardText>{this.props.snippet.content}</CardText>
         </CardBody>
         <ButtonGroup>
           <Button
             id={this.props.snippet.id}
             onClick={this.editSnippet}
             color="primary"
-            size="sm"
+            size="xs"
           >
             Edit
           </Button>
@@ -48,7 +34,7 @@ class Snippet extends React.Component {
             id={this.props.snippet.id}
             onClick={this.deleteSnippet}
             color="danger"
-            size="sm"
+            size="xs"
           >
             Delete
           </Button>
