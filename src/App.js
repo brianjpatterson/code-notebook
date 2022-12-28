@@ -94,8 +94,9 @@ class App extends React.Component {
   };
 
   deleteSnippet = (snippetUUID) => {
-    this.setActiveSnippet(snippetUUID);
-    this.state.snippets.splice(this.state.activeSnippetIndex, 1);
+    //this.setActiveSnippet(snippetUUID);
+    let index = this.getSnippetIndexFromUUID(snippetUUID);
+    this.state.snippets.splice(index, 1);
     this.setActiveSnippet(null);
   };
 
@@ -120,6 +121,7 @@ class App extends React.Component {
     return (
       <div className="App">
         <Container>
+          <Row>Code Notebook v0.0.9</Row>
           <Row>
             <Col xs="3">
               <Notebook
