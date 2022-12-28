@@ -1,12 +1,14 @@
 ## Feature List
 
 User Can view a list of Snippets
-User Can create a new Snippet
-User Can Edit an existing Snippet
-User Can view an existing Snippet
-User Can delete an existing Snippet
 
---
+User Can create a new Snippet
+
+User Can Edit an existing Snippet
+
+User Can view an existing Snippet
+
+User Can delete an existing Snippet
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
