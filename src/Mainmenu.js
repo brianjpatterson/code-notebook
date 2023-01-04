@@ -1,6 +1,15 @@
 import React from "react";
 import uuid from "uuid";
-import { Row, Button } from "reactstrap";
+import {
+  Form,
+  FormFeedback,
+  FormGroup,
+  FormText,
+  Label,
+  Input,
+  Button,
+  Row,
+} from "reactstrap";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { dark } from "react-syntax-highlighter/dist/esm/styles/prism";
 import "./Mainmenu.css";
@@ -28,7 +37,8 @@ class Mainmenu extends React.Component {
 
   render() {
     return (
-      <form
+      <Form
+        className="form"
         onSubmit={
           this.props.currentAction === "edit"
             ? this.handleUpdateSubmit
@@ -56,31 +66,44 @@ class Mainmenu extends React.Component {
           </div>
         ) : (
           <div>
+            <FormGroup>
+              <h4>Notebook Entry</h4>
+            </FormGroup>
+            <FormGroup>
+              <FormText>
+                Create a title for your notebook entry. (Up to 255 characters)
+              </FormText>
+              <Input
+                style={{ width: "80%" }}
+                placeholder="Snippet Title"
+                className="titleInput"
+                type="text"
+                id="title"
+                value={this.props.title}
+                onChange={this.handleChange}
+              />
+            </FormGroup>
+            <FormGroup>
+              <FormText style={{ marginTop: "20px" }}>Snippet Code:</FormText>
+
+              <Input
+                rows={12}
+                placeholder="Type or paste the code for your notebook entry."
+                className="contentInput"
+                type="textarea"
+                id="content"
+                value={this.props.content}
+                onChange={this.handleChange}
+              />
+            </FormGroup>
             <Button color="primary" type="submit">
               {this.props.currentAction === "edit"
                 ? "Update Snippet"
-                : "Add Snippet"}
+                : "Save Snippet"}
             </Button>
-            <input
-              placeholder="title"
-              className="titleInput"
-              type="text"
-              id="title"
-              value={this.props.title}
-              onChange={this.handleChange}
-            />
-            <textarea
-              rows="22"
-              placeholder="Paste or Input your Code Here"
-              className="contentInput"
-              type="text"
-              id="content"
-              value={this.props.content}
-              onChange={this.handleChange}
-            />
           </div>
         )}
-      </form>
+      </Form>
     );
   }
 }

@@ -1,5 +1,15 @@
 import React from "react";
-import { Row, Col, Button } from "reactstrap";
+import {
+  Form,
+  FormFeedback,
+  FormGroup,
+  FormText,
+  Label,
+  Input,
+  Button,
+  Row,
+  Col,
+} from "reactstrap";
 import Snippet from "./Snippet";
 
 class Notebook extends React.Component {
@@ -9,6 +19,7 @@ class Notebook extends React.Component {
   render() {
     return (
       <Row>
+        <h4 style={{ width: "100%", textAlign: "center" }}>Snippets List</h4>
         <Col>
           <div className="Main">
             <div className="main-menu">

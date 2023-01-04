@@ -6,7 +6,7 @@ import "./App.css";
 
 class App extends React.Component {
   constructor(props) {
-    super(props);
+    super();
 
     this.state = {
       activeSnippetUUID: null,
@@ -121,7 +121,9 @@ class App extends React.Component {
     return (
       <div className="App">
         <Container>
-          <Row>Code Notebook v0.0.9</Row>
+          <Row>
+            <h3 className="mx-auto p-3">Code Notebook v.0.1.1</h3>
+          </Row>
           <Row>
             <Col xs="3">
               <Notebook
