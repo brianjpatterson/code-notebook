@@ -18,6 +18,21 @@ class App extends React.Component {
     };
   }
 
+  async componentDidMount() {
+    const response = await this.fetchSnippets();
+    this.setState({ snippets: await response.json() });
+  }
+
+  fetchSnippets = async () => {
+    let response = null;
+    try {
+      response = await fetch("http://localhost:5000/snippets");
+    } catch (error) {
+      console.log(error);
+    }
+    return response;
+  };
+
   inputClear = () => this.setState({ title: "", content: "" });
 
   inputChange = (inputId, inputValue) =>

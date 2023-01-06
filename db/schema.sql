@@ -1,0 +1,6 @@
+CREATE TABLE snippets (
+  id INTEGER PRIMARY KEY,
+  title TEXT NOT NULL,
+  content TEXT NOT NULL,
+  date DATE NOT NULL
+);

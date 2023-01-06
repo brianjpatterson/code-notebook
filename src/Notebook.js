@@ -17,6 +17,8 @@ class Notebook extends React.Component {
     this.props.onSnippetAction(action, snippetUUID);
 
   render() {
+    //console.log(this.props.activeSnippetIndex, " -activeSnippet");
+    console.log(this.props, " -thisprops");
     return (
       <Row>
         <h4 style={{ width: "100%", textAlign: "center" }}>Snippets List</h4>
@@ -35,7 +37,7 @@ class Notebook extends React.Component {
               )}
             </div>
             <div className="viewList">
-              {this.props.activeSnippetIndex ? (
+              {this.props.activeSnippetIndex !== null ? (
                 <Snippet
                   onSnippetAction={this.snippetAction}
                   snippet={this.props.snippets[this.props.activeSnippetIndex]}
